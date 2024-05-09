@@ -1,0 +1,37 @@
+create table Entidad (
+	codigo int,
+	nombre varchar(40),
+	tipo int, 
+	constraint codigo_entidad_pk primary key (codigo)
+);
+create table Negocio (
+	cod_entidad int,
+	cod_negocio int,
+	constraint cod_negocio_pk primary key (cod_negocio),
+	constraint cod_entidad_fk foreign key (cod_entidad) references Entidad(codigo)
+);
+
+create table Rentabilidad(
+	cod_transaccion int,
+	fecha_corte date,
+	rentab_ano float,
+	val_op_dia float,
+	num_unidades int,
+	val_fondo_cierre float,
+	rentab_dia float,
+	num_invers int,
+	rentab_sem float,
+	rentab_mes float,
+	constraint transaccion_pk primary key (cod_transaccion)
+);
+
+create table Clas_fondo(
+	cod_negocio int,
+	cod_transaccion int,
+	tipo_part int,
+	cons_id_part int,
+	constraint cod_negocio_clas_fondo_fk foreign key (cod_negocio) references Negocio(cod_negocio),
+	constraint cod_transaccion_clas_fondo_fk foreign key (cod_transaccion) references Rentabilidad(cod_transaccion)
+)
+
+create table
