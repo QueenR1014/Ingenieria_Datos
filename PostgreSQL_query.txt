@@ -1,8 +1,11 @@
 create table Entidad (
+id int,
+    
+cod_entidad int;
 
 Fecha date,
 
-Nombre_entidad varchar(50) primary key,
+Nombre_entidad varchar(100),
 
 cod_negocio int,
 
@@ -10,18 +13,22 @@ cod_transaccion int,
 
 foreign key (cod_transaccion) references Rentabilidad(cod_transaccion),
 
-foreign key (cod_negocio) references Negocio(cod_negocio)
+foreign key (cod_negocio) references Negocio(cod_negocio),
+
+foreign key (id) references Identificacion(id)
 
 );
 
 
 create table Identificacion(
+    
+id int primary key,
 
 tipo_entidad int,
 
 cod_entidad int,
 
-Nombre_entidad varchar(50),
+Nombre_entidad varchar(100),
 
 foreign key (Nombre_entidad) references Entidad(Nombre_entidad)
 
@@ -33,7 +40,7 @@ create table Negocio(
 
 cod_negocio int primary key,
 
-Nombre_entidad varchar(50),
+Nombre_negocio varchar(100),
 
 sub_negocio int,
 
@@ -50,14 +57,14 @@ create table Subtipo(
 
 id_ST int primary key,
 
-Nombre_subtipo varchar(30));
+Nombre_subtipo varchar(100));
 
 
 create table Jerarquia(
 
 id_PC int primary key,
 
-PC varchar(20)
+PC varchar(100)
 
 );
 
