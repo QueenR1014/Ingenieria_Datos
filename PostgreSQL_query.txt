@@ -70,7 +70,7 @@ num_unidades float,
 
 valor_unidad float,
 
-valor_fonfo_cierre float,
+valor_fondo_cierre float,
 
 num_invers int,
 
