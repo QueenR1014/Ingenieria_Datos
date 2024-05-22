@@ -19,7 +19,7 @@ sql_query = "Select * from Negocio;" #query de testeo
 
 df = pd.read_sql(sql_query,conn) #referencia el sql query a la conexión
 
-print(df[['Cod. Negocio','Nombre Negocio']].iloc[0:9])
+print(df[['cod_negocio','nombre_negocio']].iloc[0:9])
 """
 if __name__ == '__main__':
     app.run_server(port=8085)"""
