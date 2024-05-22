@@ -8,9 +8,9 @@ import plotly.express as px
 
 app = dash.Dash()
 
-dbname = "yourDB" #poner el nombre de la base de datos para hacer la conexión
-user = "admin" #poner el nombre del usuario destinado a la conexión de datos
-password = "123456789" #contraseña del usuario
+dbname = "Reporte_financiero_2024_03" #poner el nombre de la base de datos para hacer la conexión
+user = "postgres" #poner el nombre del usuario destinado a la conexión de datos
+password = "13031" #contraseña del usuario
 host = "localhost" #servidor local
 
 conn = psy2.connect(dbname = dbname, user = user, password=password, host = host)
