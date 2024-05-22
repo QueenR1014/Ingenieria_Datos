@@ -14,7 +14,7 @@ try:
 
 
     # Tabla1 Entidad
-    cursor.execute("SELECT * FROM Entidad")  
+    cursor.execute("SELECT * FROM Entidad   ")  
     rows_tabla_Entidad = cursor.fetchall()  
     for row in rows_tabla_Entidad:
         print(row)
