@@ -15,27 +15,30 @@ host = "localhost" #servidor local
 
 conn = psy2.connect(dbname = dbname, user = user, password=password, host = host)
 
-sql_query = "SELECT n.cod_negocio, n.Nombre_negocio, r.rentab_año FROM rentabilidad r JOIN entidad e ON r.cod_transaccion = e.cod_transaccion JOIN negocio n ON e.cod_negocio = n.cod_negocio;;" #query de testeo
+
+#Análisis de Rendimiento Histórico (Análisis 1)
+sql_query = "SELECT n.cod_negocio, n.Nombre_negocio, r.rentab_año, r.rentab_dia, r.rentab_mes, r.rentab_sem FROM rentabilidad r JOIN entidad e ON r.cod_transaccion = e.cod_transaccion JOIN negocio n ON e.cod_negocio = n.cod_negocio;" #query de testeo
 
 df = pd.read_sql(sql_query,conn) #referencia el sql query a la conexión
 
-#print(df[['cod_negocio','nombre_negocio']].iloc[0:9])
+#iterar sobre todas las columnas de Rentabilidad
+rentab_columns = [col for col in df.columns if col.startswith('rentab_')]
 
 app.layout = html.Div([
-    html.H1('Rentabilidad Anual Negocio', style = {
+    html.H1('Análisis de Rendimiento Histórico', style = {
         'text-align':'center'
     }),
-    dcc.Graph(
-        id = 'rentabilidad-anual',
-        figure = px.bar(df[['cod_negocio','rentab_año']].iloc[0:9], 
-                x = 'cod_negocio', y = 'rentab_año', title = 'Relación Negocio-Rentabilidad').update_layout(
-                    xaxis_title = 'Código del Negocio',
-                    yaxis_title = 'Rentabilidad Anual'
-                )
-    )
+    *[dcc.Graph(
+        id=f'rentabilidad-{col}',
+        figure=px.bar(df[['cod_negocio', col]].iloc[0:9], 
+                      x='cod_negocio', y=col, title=f'Relación Negocio-{col}').update_layout(
+                          xaxis_title='Código del Negocio',
+                          yaxis_title=col
+                      )
+    ) for col in rentab_columns]
 ])
 
 conn.close()
 
 if __name__ == '__main__':
-    app.run_server(port=8085)
+    app.run_server(port=8085) 
