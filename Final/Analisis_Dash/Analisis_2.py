@@ -1,20 +1,14 @@
 import pandas as pd
-import psycopg2 as psy2
+from sqlalchemy import create_engine
 import dash
-import dash_core_components as dcc
-import dash_html_components as html
-import dash_table
+from dash import dcc, html, dash_table
 from dash.dependencies import Input, Output
 import plotly.express as px
 
-app = dash.Dash()
+app = dash.Dash(__name__)
 
-dbname = "Reporte_financiero_2024_03"
-user = "postgres"
-password = "13031"
-host = "localhost"
-
-conn = psy2.connect(dbname=dbname, user=user, password=password, host=host)
+# Create a SQLAlchemy engine
+engine = create_engine('postgresql://username:password@localhost:5432/database_name')
 
 # Query to fetch necessary data
 sql_query = """
@@ -33,8 +27,8 @@ JOIN
     negocio n ON e.cod_negocio = n.cod_negocio;
 """
 
-df = pd.read_sql(sql_query, conn)
-conn.close()
+df = pd.read_sql(sql_query, engine)
+engine.dispose()  # Close the engine when done
 
 # Extracting criteria-based columns
 criteria_columns = ['rentab_año', 'rentab_dia', 'rentab_mes', 'rentab_sem']
@@ -111,4 +105,4 @@ def update_table(rentab_año_range, rentab_dia_range, rentab_mes_range, rentab_s
     return filtered_df.to_dict('records')
 
 if __name__ == '__main__':
-    app.run_server(port=8085)
+    app.run_server(debug=True)
