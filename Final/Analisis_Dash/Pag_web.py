@@ -54,7 +54,7 @@ try:
         html.P("- Daniel Jose Morales Ramirez", className='p'),
         html.P("- Kevin Sebastian Canchila Rodrigez", className='p'),
         html.P("- Laura Sofia Ortiz Merchan", className='p'),
-        html.P("- Juan Jose Reina Reyes (rol: jugar val)", className='p'),
+        html.P("- Juan Jose Reina Reyes (rol: jugar val y hacer pdf's)", className='p'),
         html.H3("Idea del proyecto: "),
         html.P("Para este proyecto se usó una base de datos del fondo de inversión colombiano para el mes de marzo del presente año en donde se pueden hacer análisis.", className='p'),
         html.P("Para este proyecto se plantearon 4 escenarios de análisis para los cuales se harán consultas y gráficas correspondientes.", className='p'),
