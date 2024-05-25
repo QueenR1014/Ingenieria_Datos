@@ -16,7 +16,7 @@ try:
 
     # Crear un cursor para ejecutar comandos SQL
     cursor = connection.cursor()
-
+#Consultas escenario 1
     # Ejecutar la consulta SQL para obtener la rent_sem_tot por negocio de cada entidad
     consulta1 = """
     SELECT i.Nombre_entidad, AVG(r.rentab_dia) AS rentab_sem_total,
@@ -36,6 +36,32 @@ try:
     cursor.execute(consulta1)
     rows_can = cursor.fetchall()
     rent_sem = pd.DataFrame(rows_can, columns=['nombre_entidad', 'rentab_sem_total', 'semana'])
+#Consultas escenario 2
+    # Ejecutar consulta SQL para ----
+    consulta2 = ""
+    cursor.execute(consulta2)
+    rows_can = cursor.fetchall()
+    cons_2 = pd.DataFrame(rows_can, columns=[])
+
+    # Ejecutar consulta SQL para ----
+    consulta3 = ""
+    cursor.execute(consulta2)
+    rows_can = cursor.fetchall()
+    cons_2 = pd.DataFrame(rows_can, columns=[])
+
+    # Ejecutar consulta SQL para ----
+    consulta4 = ""
+    cursor.execute(consulta2)
+    rows_can = cursor.fetchall()
+    cons_2 = pd.DataFrame(rows_can, columns=[])
+
+#Consulta3
+    # Ejecutar consulta SQL para ----
+    consulta6 = ""
+    cursor.execute(consulta2)
+    rows_can = cursor.fetchall()
+    cons_2 = pd.DataFrame(rows_can, columns=[])
+
 
     # Cerrar el cursor
     cursor.close()
@@ -54,7 +80,7 @@ try:
         html.P("- Daniel Jose Morales Ramirez", className='p'),
         html.P("- Kevin Sebastian Canchila Rodrigez", className='p'),
         html.P("- Laura Sofia Ortiz Merchan", className='p'),
-        html.P("- Juan Jose Reina Reyes (rol: jugar val y hacer pdf's)", className='p'),
+        html.P("- Juan Jose Reina Reyes (rol: jugar val)", className='p'),
         html.H3("Idea del proyecto: "),
         html.P("Para este proyecto se usó una base de datos del fondo de inversión colombiano para el mes de marzo del presente año en donde se pueden hacer análisis.", className='p'),
         html.P("Para este proyecto se plantearon 4 escenarios de análisis para los cuales se harán consultas y gráficas correspondientes.", className='p'),
@@ -92,6 +118,7 @@ try:
         # SEGUNDO ESCENARIO
         html.H2("Segundo escenario: "),
         html.P("Mantener la diversificación en las inversiones del fondo, asegurando que ninguna entidad o tipo negocio representa una parte desproporcionada del portafolio total.", className='p'),
+        
         dcc.Graph(id='esc_2'),  # *cantidad de gráficos
         html.H3("Análisis del escenario: "),
         html.P("CONCLUSIONES DEL CASO(PENDIENTE)", className='p'),
