@@ -1,10 +1,10 @@
 import pandas as pd
-from dash import Dash, html, dcc
+from dash import Dash, html, dcc, Input, Output
 import psycopg2
 import plotly.express as px
 
+# Establecer conexión con la base de datos PostgreSQL
 try:
-    # Establecer conexión con la base de datos PostgreSQL
     connection = psycopg2.connect(
         host='localhost',
         user='postgres',
@@ -43,91 +43,98 @@ try:
     # Crear la aplicación Dash
     app = Dash(__name__)
 
-
     # Crear un pivot table para el mapa de calor
     heatmap_data = rent_sem.pivot(index='nombre_entidad', columns='semana', values='rentab_sem_total')
 
-
-
     # Definir el layout de la aplicación
     app.layout = html.Div(children=[
-#INTRODUCCION
+        # INTRODUCCION
         html.H1("Análisis financiero del fondo de inversiones financiero Colombia para Marzo 2024"),
         html.H2("Integrantes: "),
-        html.P("- Daniel Jose Morales Ramirez", className = 'p'),
-        html.P("- Kevin Sebastian Canchila Rodrigez", className = 'p'),
-        html.P("- Laura Sofia Ortiz Merchan", className = 'p'),
-        html.P("- Juan Jose Reina Reyes (rol: jugar val)", className = 'p'),
+        html.P("- Daniel Jose Morales Ramirez", className='p'),
+        html.P("- Kevin Sebastian Canchila Rodrigez", className='p'),
+        html.P("- Laura Sofia Ortiz Merchan", className='p'),
+        html.P("- Juan Jose Reina Reyes (rol: jugar val)", className='p'),
         html.H3("Idea del proyecto: "),
-        html.P("Para este proyecto se usó una base de datos del fondo de inversión colombiano para el mes de marzo del presente año en donde se pueden hacer análisis.", className = 'p'),
-        html.P("Para este proyecto se plantearon 4 escenarios de análisis para los cuales se harán consultas y gráficas correspondientes.", className = 'p'),
-#ESCENARIOS
+        html.P("Para este proyecto se usó una base de datos del fondo de inversión colombiano para el mes de marzo del presente año en donde se pueden hacer análisis.", className='p'),
+        html.P("Para este proyecto se plantearon 4 escenarios de análisis para los cuales se harán consultas y gráficas correspondientes.", className='p'),
+        # ESCENARIOS
+#PRIMER ESCENARIO
         html.H2("Primer escenario: "),
-        html.P("Examinar el rendimiento histórico de cada negocio y entidad para asegurar decisiones basadas en datos probados.", className = 'p'),
-#GRAFICAS DEL ESCENARIO
+        html.P("Examinar el rendimiento histórico de marzo para cada entidad y asi asegurar decisiones basadas en datos probados.", className='p'),
+        # Dropdown para seleccionar entidades
+        dcc.Dropdown(
+            id='entity-selector',
+            options=[{'label': entidad, 'value': entidad} for entidad in rent_sem['nombre_entidad'].unique()],
+            value=rent_sem['nombre_entidad'].unique().tolist(),  # valor por defecto
+            multi=True
+        ),
         # Gráfica de líneas apiladas
+        dcc.Graph(id='area-chart'),
+        # Mapa de calor
         dcc.Graph(
-            id='area-chart',
-            figure=px.area(
-            rent_sem,
+            id='heatmap1',
+            figure=px.imshow(
+                heatmap_data,
+                labels=dict(x="Semana", y="Entidad", color="Rentabilidad"),
+                title='Mapa de Calor de Rentabilidad por Entidad y Semana'
+            ).update_layout(
+                height = 700 
+            )
+        ),
+        html.H3("Analisis del escenario: "),
+        html.P("CONCLUSIONES DEL CASO(PENDIENTE)", className='p'),
+
+
+#SEGUNDO ESCENARIO
+        html.H2("Segundo escenario: "),
+        html.P("Mantener la diversificación en las inversiones del fondo, asegurando que ninguna entidad o tipo negocio representa una parte desproporcionada del portafolio total.", className='p'),
+        dcc.Graph(id='esc_2'),  # *cantidad de graficaos
+        html.H3("Analisis del escenario: "),
+        html.P("CONCLUSIONES DEL CASO(PENDIENTE)", className='p'),
+
+
+
+#TERCER ESCENARIO
+        html.H2("Tercer escenario: "),
+        html.P("Definir criterios claros y objetivos para la selección de negocios y entidades, incluyendo rentabilidad esperada, estabilidad financiera, y potencial de crecimiento.", className='p'),
+        dcc.Graph(id='esc_3'),  # *cantidad de graficaos
+        html.H3("Analisis del escenario: "),
+        html.P("CONCLUSIONES DEL CASO(PENDIENTE)", className='p'),
+
+
+
+#CUARTO ESCENARIO
+        html.H2("Cuarto escenario: "),
+        html.P("Por definir", className='p'),
+        dcc.Graph(id='esc_4'),  # *cantidad de graficaos
+        html.H3("Analisis del escenario: "),
+        html.P("CONCLUSIONES DEL CASO(PENDIENTE)", className='p'),
+
+
+# FINAL DEL ARCHIVO
+        html.H3("Conclusiones generales"),
+        html.P("POR DEFINIR(IMPORTANTE)", className='p')
+    ])
+
+    # Definir el callback para actualizar la gráfica en función de la selección de entidades
+    @app.callback(
+        Output('area-chart', 'figure'),
+        Input('entity-selector', 'value')
+    )
+    def update_area_chart(selected_entities):
+        filtered_data = rent_sem[rent_sem['nombre_entidad'].isin(selected_entities)]
+        fig = px.area(
+            filtered_data,
             x='semana',
             y='rentab_sem_total',
             color='nombre_entidad',
             title='Rentabilidad por Entidad y Semana'
-            )
-        ),
-
-        # Mapa de calor
-        dcc.Graph(
-            id='heatmap',
-            figure=px.imshow(
-            heatmap_data,
-            labels=dict(x="Semana", y="Entidad", color="Rentabilidad"),
-            title='Mapa de Calor de Rentabilidad por Entidad y Semana'
-            )
-        ),
-
-        html.H3("Analisis del escenario: "),
-        html.P("CONCLUSIONES DEL CASO(PENDIENTE)", className = 'p'),
-        
-        html.H2("Segundo escenario: "),
-        html.P("Mantener la diversificación en las inversiones del fondo, asegurando que ninguna entidad o negocio representa una parte desproporcionada del portafolio total. ", className = 'p'),
-#Graficas de los escenarios
-        dcc.Graph(id='esc_2' #figure = px.grafico(atributos)
-                ), #*cantidad de graficaos
-
-        html.H3("Analisis del escenario: "),
-        html.P("CONCLUSIONES DEL CASO(PENDIENTE)", className = 'p'),
-
-
-
-        html.H2("Tercer escenario: "),
-        html.P("Definir criterios claros y objetivos para la selección de negocios y entidades, incluyendo rentabilidad esperada, estabilidad financiera, y potencial de crecimiento. ", className = 'p'),
-#Graficas de los escenarios
-        dcc.Graph(id='esc_3' #figure = px.grafico(atributos)
-                ), #*cantidad de graficaos
-
-        html.H3("Analisis del escenario: "),
-        html.P("CONCLUSIONES DEL CASO(PENDIENTE)" , className = 'p'),
-
-
-        html.H2("Cuarto escenario: "),
-        html.P("Por definir " , className = 'p'),
-#Graficas de los escenarios
-        dcc.Graph(id='esc_4' #figure = px.grafico(atributos)
-                ), #*cantidad de graficaos
-
-        html.H3("Analisis del escenario: "),
-        html.P("CONCLUSIONES DEL CASO(PENDIENTE)", className = 'p'),
-
-        html.H3("Conclusiones generales"),
-        html.P("POR DEFINIR(IMPORTANTE)", className = 'p')
-
-
-    ])
+        )
+        return fig
 
     # Ejecutar la aplicación
-    if __name__== '__main__':
+    if __name__ == '__main__':
         app.run_server(debug=True)
 
 except Exception as ex:
