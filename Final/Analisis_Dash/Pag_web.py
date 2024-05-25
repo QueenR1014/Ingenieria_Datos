@@ -54,16 +54,16 @@ try:
 #INTRODUCCION
         html.H1("Análisis financiero del fondo de inversiones financiero Colombia para Marzo 2024"),
         html.H2("Integrantes: "),
-        html.P("- Daniel Jose Morales Ramirez"),
-        html.P("- Kevin Sebastian Canchila Rodrigez"),
-        html.P("- Laura Sofia Ortiz Merchan"),
-        html.P("- Juan Jose Reina Reyes (rol: jugar val)"),
+        html.P("- Daniel Jose Morales Ramirez", className = 'p'),
+        html.P("- Kevin Sebastian Canchila Rodrigez", className = 'p'),
+        html.P("- Laura Sofia Ortiz Merchan", className = 'p'),
+        html.P("- Juan Jose Reina Reyes (rol: jugar val)", className = 'p'),
         html.H3("Idea del proyecto: "),
-        html.P("Para este proyecto se usó una base de datos del fondo de inversión colombiano para el mes de marzo del presente año en donde se pueden hacer análisis."),
-        html.P("Para este proyecto se plantearon 4 escenarios de análisis para los cuales se harán consultas y gráficas correspondientes."),
+        html.P("Para este proyecto se usó una base de datos del fondo de inversión colombiano para el mes de marzo del presente año en donde se pueden hacer análisis.", className = 'p'),
+        html.P("Para este proyecto se plantearon 4 escenarios de análisis para los cuales se harán consultas y gráficas correspondientes.", className = 'p'),
 #ESCENARIOS
         html.H2("Primer escenario: "),
-        html.P("Examinar el rendimiento histórico de cada negocio y entidad para asegurar decisiones basadas en datos probados."),
+        html.P("Examinar el rendimiento histórico de cada negocio y entidad para asegurar decisiones basadas en datos probados.", className = 'p'),
 #GRAFICAS DEL ESCENARIO
         # Gráfica de líneas apiladas
         dcc.Graph(
@@ -88,40 +88,40 @@ try:
         ),
 
         html.H3("Analisis del escenario: "),
-        html.P("CONCLUSIONES DEL CASO(PENDIENTE)"),
+        html.P("CONCLUSIONES DEL CASO(PENDIENTE)", className = 'p'),
         
         html.H2("Segundo escenario: "),
-        html.P("Mantener la diversificación en las inversiones del fondo, asegurando que ninguna entidad o negocio representa una parte desproporcionada del portafolio total. "),
+        html.P("Mantener la diversificación en las inversiones del fondo, asegurando que ninguna entidad o negocio representa una parte desproporcionada del portafolio total. ", className = 'p'),
 #Graficas de los escenarios
         dcc.Graph(id='esc_2' #figure = px.grafico(atributos)
                 ), #*cantidad de graficaos
 
         html.H3("Analisis del escenario: "),
-        html.P("CONCLUSIONES DEL CASO(PENDIENTE)"),
+        html.P("CONCLUSIONES DEL CASO(PENDIENTE)", className = 'p'),
 
 
 
         html.H2("Tercer escenario: "),
-        html.P("Definir criterios claros y objetivos para la selección de negocios y entidades, incluyendo rentabilidad esperada, estabilidad financiera, y potencial de crecimiento. "),
+        html.P("Definir criterios claros y objetivos para la selección de negocios y entidades, incluyendo rentabilidad esperada, estabilidad financiera, y potencial de crecimiento. ", className = 'p'),
 #Graficas de los escenarios
         dcc.Graph(id='esc_3' #figure = px.grafico(atributos)
                 ), #*cantidad de graficaos
 
         html.H3("Analisis del escenario: "),
-        html.P("CONCLUSIONES DEL CASO(PENDIENTE)"),
+        html.P("CONCLUSIONES DEL CASO(PENDIENTE)" , className = 'p'),
 
 
         html.H2("Cuarto escenario: "),
-        html.P("Por definir "),
+        html.P("Por definir " , className = 'p'),
 #Graficas de los escenarios
         dcc.Graph(id='esc_4' #figure = px.grafico(atributos)
                 ), #*cantidad de graficaos
 
         html.H3("Analisis del escenario: "),
-        html.P("CONCLUSIONES DEL CASO(PENDIENTE)"),
+        html.P("CONCLUSIONES DEL CASO(PENDIENTE)", className = 'p'),
 
         html.H3("Conclusiones generales"),
-        html.P("POR DEFINIR(IMPORTANTE)")
+        html.P("POR DEFINIR(IMPORTANTE)", className = 'p')
 
 
     ])
