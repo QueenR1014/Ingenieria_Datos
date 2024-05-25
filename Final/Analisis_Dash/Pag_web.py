@@ -92,6 +92,38 @@ try:
         
         html.H2("Segundo escenario: "),
         html.P("Mantener la diversificación en las inversiones del fondo, asegurando que ninguna entidad o negocio representa una parte desproporcionada del portafolio total. "),
+#Graficas de los escenarios
+        dcc.Graph(id='esc_2' #figure = px.grafico(atributos)
+                ), #*cantidad de graficaos
+
+        html.H3("Analisis del escenario: "),
+        html.P("CONCLUSIONES DEL CASO(PENDIENTE)"),
+
+
+
+        html.H2("Tercer escenario: "),
+        html.P("Definir criterios claros y objetivos para la selección de negocios y entidades, incluyendo rentabilidad esperada, estabilidad financiera, y potencial de crecimiento. "),
+#Graficas de los escenarios
+        dcc.Graph(id='esc_3' #figure = px.grafico(atributos)
+                ), #*cantidad de graficaos
+
+        html.H3("Analisis del escenario: "),
+        html.P("CONCLUSIONES DEL CASO(PENDIENTE)"),
+
+
+        html.H2("Cuarto escenario: "),
+        html.P("Por definir "),
+#Graficas de los escenarios
+        dcc.Graph(id='esc_4' #figure = px.grafico(atributos)
+                ), #*cantidad de graficaos
+
+        html.H3("Analisis del escenario: "),
+        html.P("CONCLUSIONES DEL CASO(PENDIENTE)"),
+
+        html.H3("Conclusiones generales"),
+        html.P("POR DEFINIR(IMPORTANTE)")
+
+
     ])
 
     # Ejecutar la aplicación
