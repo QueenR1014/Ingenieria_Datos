@@ -223,7 +223,7 @@ try:
             html.P("- Daniel Jose Morales Ramirez"),
             html.P("- Kevin Sebastian Canchila Rodrigez"),
             html.P("- Laura Sofia Ortiz Merchan"),
-            html.P("- Juan Jose Reina Reyes (rol: jugar val)(DEBERIA ESTAR BRAYAN CANCHILA)")
+            html.P("- Juan Jose Reina Reyes (rol: jugar val)(DEBERIA ESTAR BRAYAN CANCHILA)(brayan no ha hecho nada del pdf >:D)")
         ], className='inner-section-container'),
         html.H3("Idea del proyecto: ", className='h3'),
         html.Div([
