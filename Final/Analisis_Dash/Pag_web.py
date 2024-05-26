@@ -120,7 +120,7 @@ ORDER BY
     cursor.execute(consulta3)
     rows_can = cursor.fetchall()
     cons_3 = pd.DataFrame(rows_can, columns=['nombre_entidad', 'coeficiente_variacion'])
-    
+
 #Consulta escenario 4
     consulta4 = """WITH ValoresPorFecha AS (
     SELECT 
@@ -168,6 +168,35 @@ ORDER BY
     rows_can = cursor.fetchall()
     cons_4 = pd.DataFrame(rows_can, columns=['nombre_entidad', 'porcentaje_cambio'])
 
+    consulta5 = """SELECT 
+    s.Nombre_subtipo,
+    (SUM(r.valor_fondo_cierre) / total.total_valor_fondo_cierre) * 100 AS porcentaje_total
+FROM 
+    Entidad e
+JOIN 
+    Rentabilidad r ON e.cod_transaccion = r.cod_transaccion
+JOIN 
+    Negocio n ON e.cod_negocio = n.cod_negocio
+JOIN 
+    Subtipo s ON n.sub_negocio = s.id_ST
+JOIN 
+    (SELECT 
+         SUM(r2.valor_fondo_cierre) AS total_valor_fondo_cierre
+     FROM 
+         Entidad e2
+     JOIN 
+         Rentabilidad r2 ON e2.cod_transaccion = r2.cod_transaccion
+     WHERE 
+         e2.Fecha = '2024-03-31') AS total
+ON 
+    e.Fecha = '2024-03-31'
+GROUP BY 
+    s.Nombre_subtipo, total.total_valor_fondo_cierre
+ORDER BY 
+    porcentaje_total DESC;"""
+    cursor.execute(consulta5)
+    rows_can = cursor.fetchall()
+    cons_5 = pd.DataFrame(rows_can, columns=['nombre_subtipo', 'porcentaje_total'])
 
     # Cerrar el cursor
     cursor.close()
@@ -246,19 +275,11 @@ ORDER BY
                 box=True,          
                 points='all',      
                 hover_data=['coeficiente_variacion'],  
-                title='distribución de los coeficientes de variación entre las entidades').update_layout(
+                title='Distribución de los coeficientes de variación entre las entidades').update_layout(
             height=800
         )   
                 ), 
 
-
-        html.H3("Análisis del escenario: "),
-        html.P("CONCLUSIONES DEL CASO(PENDIENTE)", className='p'),
-
-        
-        # CUARTO ESCENARIO
-        html.H2("Cuarto escenario: "),
-        html.P("Por definir", className='p'),
         dcc.Graph(id = 'grafica_barras_vambio',
                   figure = px.bar(cons_4, x = 'nombre_entidad', y = 'porcentaje_cambio', title = 'Porcentaje de Cambio en el Valor del Fondo de Cierre por Entidad',  
                                   color=cons_4['porcentaje_cambio'] > 0,
@@ -268,15 +289,15 @@ ORDER BY
                                       showlegend=False,
                                       updatemenus=[
                                           dict(buttons=[
-                                              dict(args=[{'visible': [True, True]}],
-                                                   label='Mostrar Ambos',
-                                                   method='update'),
-                                                   dict(args=[{'visible': [True, False]}],
-                                                   label='Mostrar Positivos',
-                                                   method='update'),
-                                                   dict(args=[{'visible': [False, True]}],
-                                                   label='Mostrar Negativos',
-                                                   method='update')],
+                                          dict(args=[{'visible': [True, True]}],
+                                          label='Mostrar Ambos',
+                                          method='update'),
+                                          dict(args=[{'visible': [True, False]}],
+                                          label='Mostrar Positivos',
+                                          method='update'),
+                                          dict(args=[{'visible': [False, True]}],
+                                          label='Mostrar Negativos',
+                                          method='update')],
                                     direction="down",
                                     showactive=True,
                                     x=1,
@@ -285,6 +306,18 @@ ORDER BY
                                     yanchor="top")] 
                                       )
                                       ),
+
+
+        html.H3("Análisis del escenario: "),
+        html.P("CONCLUSIONES DEL CASO(PENDIENTE)", className='p'),
+
+        
+        # CUARTO ESCENARIO
+        html.H2("Cuarto escenario: "),
+        html.P("Por definir", className='p'),
+
+        dcc.Graph(id='grafica_torta', function=px.pie(cons_5, values='porcentaje_total', names = 'nombre_subtipo', title='Proporciones de los suptipos de negocio con respecto al fondo')),
+        
         html.H3("Análisis del escenario: "),
         html.P("CONCLUSIONES DEL CASO(PENDIENTE)", className='p'),
         
