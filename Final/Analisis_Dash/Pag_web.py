@@ -120,7 +120,6 @@ try:
     rows_can = cursor.fetchall()
     cons_3 = pd.DataFrame(rows_can, columns=['nombre_entidad', 'coeficiente_variacion'])
 
-    # Consultas escenario 4
     consulta4 = """
     WITH ValoresPorFecha AS (
         SELECT 
@@ -168,6 +167,7 @@ try:
     rows_can = cursor.fetchall()
     cons_4 = pd.DataFrame(rows_can, columns=['nombre_entidad', 'porcentaje_cambio'])
 
+    # Consultas escenario 4
     consulta5 = """
     SELECT 
         s.Nombre_subtipo,
