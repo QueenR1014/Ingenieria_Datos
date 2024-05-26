@@ -316,7 +316,7 @@ ORDER BY
         html.H2("Cuarto escenario: "),
         html.P("Por definir", className='p'),
 
-        dcc.Graph(id='grafica_torta', function=px.pie(cons_5, values='porcentaje_total', names = 'nombre_subtipo', title='Proporciones de los suptipos de negocio con respecto al fondo')),
+        dcc.Graph(id='grafica_torta', figure=px.pie(cons_5, values='porcentaje_total', names = 'nombre_subtipo', title='Proporciones de los suptipos de negocio con respecto al fondo')),
         
         html.H3("Análisis del escenario: "),
         html.P("CONCLUSIONES DEL CASO(PENDIENTE)", className='p'),
