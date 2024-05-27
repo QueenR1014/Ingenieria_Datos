@@ -337,7 +337,7 @@ SELECT * FROM TopPeores;"""
             html.P("Laura: Se identificaron los negocios con las mejores y peores variaciones diarias de rentabilidad. El negocio con la peor variación fue el Compartimiento B - FCP Deuda Infraestructura II Sura - Credicorp Capital, mientras que el negocio con la mejor variación, superando significativamente a los demás con una mediana de 662.7351 por día, fue el FCP 4G Credicorp Capital - Sura AM Comp Liquidez I."),
             html.P("Daniel: Con estas gráficas, podemos observar los 5 mejores y los 5 peores negocios según la variación diaria de la rentabilidad. Esto nos permite realizar el análisis necesario al momento de invertir. En esta parte del análisis, es importante tener en cuenta el negocio FCP 4G Credicorp Capital - Sura AM Comp Liquidez I, ya que ha mantenido una buena variación."),
             html.P("Kevin: Estas gráficas permiten identificar los negocios que sobresalen y aquellos que enfrentan dificultades, proporcionando una herramienta para la toma de decisiones estratégicas. Las variaciones en la rentabilidad diaria son indicadores críticos de desempeño, y su análisis puede guiar inversiones futuras."),
-            html.P("Juan Jose: ")
+            html.P("Juan Jose: La visualización nos da a entender directamente cuáles son los mejores o peores negocios de acuerdo al crecimiento de su valor del fondo. Si bien el ver los extremos nos brindan los casos excepcionales, manejando la selección podemos filtrar los datos para ver casos de negocios de una manera más normalizada. Así pudiendo evitar invertir o retirar inversionesde fondos que no necesariamente a largo plazo sean los mejores o puedan tener un efecto rebote.")
         ], className='inner-section-container'),
         # SEGUNDO ESCENARIO
         html.H2("Segundo escenario: ", className='h2'),
@@ -355,7 +355,7 @@ SELECT * FROM TopPeores;"""
             html.P("Laura: La diversificación es una técnica que asigna inversiones a diferentes y variados activos para minimizar el riesgo. Esto implica una mezcla de diversos vehículos de inversión, así como exposiciones a distintas industrias y geografías. En nuestro análisis, se observó que las entidades menos diversificadas son ADCAP COLOMBIA S.A., FIDUCIARIA SURA S.A., y FIDUCIARIA DE OCCIDENTE S.A., mientras que la entidad más diversificada es Valores Bancolombia S.A. Esto asegura que ninguna entidad represente una proporción desproporcionada del riesgo total."),
             html.P("Daniel: Las entidades que aparecen en la parte superior de la gráfica, como ADCAP COLOMBIA S.A. y FIDUCIARIA SURA S.A., presentan los porcentajes más bajos. Esto sugiere que estas entidades están diversificando sus inversiones de manera más amplia, lo que reduce el riesgo asociado a la concentración en una sola inversión."),
             html.P("Kevin: Se puede identificar como tiene diversificado el fondo cada entidad, para lo cual las entidad que tienen un negocio que representa un gran porcentaje de su capital, existe un riesgo más alto de las que tienen una buena diversificación."),
-            html.P("Juan Jose: ")
+            html.P("Juan Jose: De este análisis podemos observar a cuáles entidades no confiar tanto en una inversión al ser su portafolio completo un solo negocio. Estas entidades son tres de las cuales tenemos: CITIVALORES S.A. , ITAu FIDUCIARIA COLOMBIA S.A. y COMPAÑIA DE PROFESIONALES DE BOLSA DE VALORES. Para estas entidades entran en gran riesgo al invertir de este modo ya que si la rentabilidad a largo plazo del negocio al que destinan el total de su capital no da los márgenes esperados, es posible que entren en pérdidas.")
         ], className='inner-section-container'),
         
         # TERCER ESCENARIO
@@ -421,7 +421,7 @@ SELECT * FROM TopPeores;"""
             html.P("Laura: Para evaluar la consistencia y volatilidad de los rendimientos de cada entidad, se calcularon el coeficiente de variación y el porcentaje de cambio de los valores de fondo de cierre durante el mes de marzo. La entidad con el menor coeficiente de variación, indicando mayor consistencia, fue la Compañía de Profesionales de Bolsa, mientras que la entidad con mayor coeficiente de variación fue BBVA Valores Colombia S.A. Comisión. En cuanto al porcentaje de cambio, BBVA Valores Colombia S.A. Comisión presentó el mejor rendimiento positivo. La Compañía de Profesionales de Bolsa no mostró cambios a lo largo del mes, y Fiduciaria La Previsora S.A. tuvo el peor rendimiento con un cambio negativo."),
             html.P("Daniel: La entidad con la mayor disminución es FIDUCIARIA LA PREVISORA S.A., ubicada en el extremo derecho de la gráfica, con un porcentaje de cambio cercano al -20%. Además, esta entidad se encuentra entre las que presentan un mayor coeficiente de variación."),
             html.P("Kevin: El coeficiente de variación nos ayuda a analizar la volatilidad y que tan consistente son los rendimientos de cada entidad lo cual nos ayuda a concluir cuales son mas seguros debido a su baja volatilidad, respecto al promedio de crecimiento de las fondos a final de mes para poder hacer un decisión inteligente a la hora de invertir en alguna entidad."),
-            html.P("Juan Jose: ")
+            html.P("Juan Jose: Para este análisis, podemos observar que para las entidades cuyo crecimiento es elevado en este intervalo de tiempo, no serían malas opciones para considerar invertir en estas a corto plazo dado su gran retorno en poco tiempo. Ejemplo de esto es la entidad BBVA VALORES COLOMBIA S.A.")
         ], className='inner-section-container'),
 
         
@@ -441,12 +441,32 @@ SELECT * FROM TopPeores;"""
             html.P("Laura: Al analizar la distribución de fondos entre diferentes subtipos de inversiones al cierre de marzo, se encontró que el subtipo predominante es el Fondo de Inversión Colectiva (FIC) de tipo general, que representa el 59.5% del total. En contraste, el subtipo con menor participación es el FIC Inmobiliario, con un 3.36%. Esta distribución refleja una preferencia significativa por los fondos de tipo general."),
             html.P("Daniel: Los subtipos de negocios que ocupan la mayor proporción en los fondos de inversión colombianos son los FIC de tipo general. Esto nos proporciona una visión clara de dónde es recomendable invertir este año."),
             html.P("Kevin: La distribución muestra una clara preferencia por los FIC de tipo general y los Fondos de Capital Privado, los cuales juntos representan más del 80% del fondo total. Esto sugiere una estrategia de inversión equilibrada entre diversificación general y apuestas significativas en activos privados. La menor proporción en FIC de Mercado Monetario, Bursátiles e Inmobiliarias indica una exposición más controlada a estos segmentos."),
-            html.P("Juan Jose: ")
+            html.P("Juan Jose: De acuerdo a la visualización, es fácil concluir que los FIC de tipo general son los que dentro de esta base de datos representan una mayor porción del capital total. Esto se puede dar debido a que como dice el propio nombre, de tipo general, son capaces de invertir casi en cualquier mercado, dándoles la posibilidad de ser los más amplios.")
         ], className='inner-section-container'),
         
         # FINAL DEL ARCHIVO
         html.H3("Conclusiones generales", className='h3'),
-        html.P("POR DEFINIR(IMPORTANTE)", className='p inner-section-container')
+        html.P("""El análisis detallado de los datos financieros proporciona una visión de la salud y el
+desempeño del mercado, así como de las estrategias de inversión empleadas por diferentes
+entidades. La diversificación de las inversiones se considera un factor crucial para mitigar el
+riesgo en el mercado financiero. Además, la consistencia y volatilidad de los rendimientos de
+las entidades evaluadas ofrecen información valiosa para los inversores, permitiéndoles tomar
+decisiones informadas sobre dónde colocar sus recursos.
+La distribución de fondos entre diferentes subtipos de inversiones proporciona una
+perspectiva sobre las preferencias y estrategias de inversión prevalentes en el mercado. Esta
+información puede ser útil para los inversores y gestores de cartera en la planificación de sus
+estrategias de asignación de activos.
+Por tanto, la identificación de los negocios con las mejores y peores variaciones diarias de
+rentabilidad ofrece información táctica sobre las oportunidades y riesgos específicos
+presentes en el mercado. Esta comprensión detallada del panorama financiero ayuda a los
+inversores a optimizar sus carteras y a tomar decisiones más fundamentadas para alcanzar sus
+objetivos financieros a largo plazo.
+Finalizando, los análisis mostrados nos permiten manejar de una manera práctica y útil la
+información que tenemos. Reconocemos que dentro del sector del mercado de los fondos de
+inversión gran parte de su propósito es tener la capacidad de tomar las mejores decisiones con
+el capital destinado al fondo, para así tener un retorno positivo. Concluimos que las
+decisiones que podrían llegar a tomar cualquier persona o institución serían de una mayor
+calidad y eficacia al tener disponible esta información.""", className='p inner-section-container')
     ], className='section-container')
 
     # Ejecutar la aplicación
