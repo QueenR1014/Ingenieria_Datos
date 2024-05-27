@@ -19,23 +19,103 @@ try:
 
     # Consultas escenario 1
     consulta1 = """
-    SELECT i.Nombre_entidad, AVG(r.rentab_dia) AS rentab_sem_total,
-    CASE
-        WHEN EXTRACT(DAY FROM e.Fecha) BETWEEN 1 AND 7 THEN 'Semana 1'
-        WHEN EXTRACT(DAY FROM e.Fecha) BETWEEN 8 AND 14 THEN 'Semana 2'
-        WHEN EXTRACT(DAY FROM e.Fecha) BETWEEN 15 AND 21 THEN 'Semana 3'
-        WHEN EXTRACT(DAY FROM e.Fecha) BETWEEN 22 AND 31 THEN 'Semana 4'
-    END AS Semana
-    FROM Entidad e
-    JOIN Identificacion i ON e.Nombre_entidad = i.Nombre_entidad
-    JOIN Rentabilidad r ON e.cod_transaccion = r.cod_transaccion
-    WHERE DATE_PART('month', e.Fecha) = 3 AND DATE_PART('year', e.Fecha) = 2024
-    GROUP BY i.Nombre_entidad, Semana
-    ORDER BY Semana;
+WITH RentabilidadMensual AS (
+    SELECT 
+        n.Nombre_negocio,
+        r.rentab_dia
+    FROM 
+        Entidad e
+    JOIN 
+        Rentabilidad r ON e.cod_transaccion = r.cod_transaccion
+    JOIN 
+        Negocio n ON e.cod_negocio = n.cod_negocio
+    WHERE 
+        e.Fecha BETWEEN '2024-03-01' AND '2024-03-31'
+),
+MedianaRentabilidad AS (
+    SELECT 
+        Nombre_negocio,
+        PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY rentab_dia) AS mediana_rentab_dia
+    FROM 
+        RentabilidadMensual
+    GROUP BY 
+        Nombre_negocio
+),
+TopPeores AS (
+    SELECT 
+        Nombre_negocio,
+        mediana_rentab_dia
+    FROM 
+        MedianaRentabilidad
+    ORDER BY 
+        mediana_rentab_dia ASC
+    LIMIT 5
+),
+TopMejores AS (
+    SELECT 
+        Nombre_negocio,
+        mediana_rentab_dia
+    FROM 
+        MedianaRentabilidad
+    ORDER BY 
+        mediana_rentab_dia DESC
+    LIMIT 5
+)
+
+SELECT * FROM TopMejores;
     """
     cursor.execute(consulta1)
     rows_can = cursor.fetchall()
-    rent_sem = pd.DataFrame(rows_can, columns=['nombre_entidad', 'rentab_sem_total', 'semana'])
+    cons_1 = pd.DataFrame(rows_can, columns=['nombre_negocio', 'mediana_rentab_dia'])
+
+    consulta8="""WITH RentabilidadMensual AS (
+    SELECT 
+        n.Nombre_negocio,
+        r.rentab_dia
+    FROM 
+        Entidad e
+    JOIN 
+        Rentabilidad r ON e.cod_transaccion = r.cod_transaccion
+    JOIN 
+        Negocio n ON e.cod_negocio = n.cod_negocio
+    WHERE 
+        e.Fecha BETWEEN '2024-03-01' AND '2024-03-31'
+),
+MedianaRentabilidad AS (
+    SELECT 
+        Nombre_negocio,
+        PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY rentab_dia) AS mediana_rentab_dia
+    FROM 
+        RentabilidadMensual
+    GROUP BY 
+        Nombre_negocio
+),
+TopPeores AS (
+    SELECT 
+        Nombre_negocio,
+        mediana_rentab_dia
+    FROM 
+        MedianaRentabilidad
+    ORDER BY 
+        mediana_rentab_dia ASC
+    LIMIT 5
+),
+TopMejores AS (
+    SELECT 
+        Nombre_negocio,
+        mediana_rentab_dia
+    FROM 
+        MedianaRentabilidad
+    ORDER BY 
+        mediana_rentab_dia DESC
+    LIMIT 5
+)
+
+SELECT * FROM TopPeores;"""
+
+    cursor.execute(consulta8)
+    rows_can = cursor.fetchall()
+    cons_8= pd.DataFrame(rows_can, columns=['nombre_negocio', 'mediana_rentab_dia'])
 
     # Consultas escenario 2
     consulta2 = """
@@ -211,9 +291,6 @@ try:
     # Crear la aplicación Dash
     app = Dash(__name__)
 
-    # Crear un pivot table para el mapa de calor
-    heatmap_data = rent_sem.pivot(index='nombre_entidad', columns='semana', values='rentab_sem_total')
-
     # Definir el layout de la aplicación
     app.layout = html.Div(children=[
         # INTRODUCCION
@@ -223,7 +300,7 @@ try:
             html.P("- Daniel Jose Morales Ramirez"),
             html.P("- Kevin Sebastian Canchila Rodrigez"),
             html.P("- Laura Sofia Ortiz Merchan"),
-            html.P("- Juan Jose Reina Reyes (rol: jugar val)(DEBERIA ESTAR BRAYAN CANCHILA)(brayan no ha hecho nada del pdf >:D)")
+            html.P("- Juan Jose Reina Reyes ")
         ], className='inner-section-container'),
         html.H3("Idea del proyecto: ", className='h3'),
         html.Div([
@@ -234,31 +311,26 @@ try:
         # ESCENARIOS
         # PRIMER ESCENARIO
         html.H2("Primer escenario: ", className='h2'),
-        html.P("Examinar el rendimiento histórico de marzo para cada entidad y así asegurar decisiones basadas en datos probados.", className='p'),
+        html.P("Identificar los negocios con mejores y peores variaciones diaria de rentabilidad", className='p'),
         
-        # Dropdown para seleccionar entidades (Gráfico de líneas apiladas)
-        dcc.Dropdown(
-            id='entity-selector',
-            options=[{'label': entidad, 'value': entidad} for entidad in rent_sem['nombre_entidad'].unique()],
-            value=rent_sem['nombre_entidad'].unique().tolist(),  # valor por defecto
-            multi=True,
-            className='dropdown'
-        ),
-        
-        # Gráfica de líneas apiladas
-        dcc.Graph(id='area-chart', className='graph'),
-        
-        # Dropdown para seleccionar entidades (Mapa de calor)
-        dcc.Dropdown(
-            id='heatmap-entity-selector',
-            options=[{'label': entidad, 'value': entidad} for entidad in rent_sem['nombre_entidad'].unique()],
-            value=rent_sem['nombre_entidad'].unique().tolist(),  # valor por defecto
-            multi=True,
-            className='dropdown'
-        ),
-        
-        # Mapa de calor
-        dcc.Graph(id='heatmap1', className='graph'),
+        dcc.Graph(id='Top',
+                      figure = px.bar(cons_1, x='nombre_negocio', y='mediana_rentab_dia',
+                    title='Top 5 mejores negocios',
+                    color= 'nombre_negocio',
+                    color_discrete_sequence=['#228B22']).update_layout(
+                    height=700,
+                ),
+            className='graph'
+                      ),
+        dcc.Graph(id='Top2',
+                      figure = px.bar(cons_8, x='nombre_negocio', y='mediana_rentab_dia',
+                    title='Top 5 peores negocios',
+                    color='nombre_negocio',
+                    color_discrete_sequence=['#FF0000']).update_layout(
+                    height=700,
+                ),
+            className='graph'
+                      ),
         
         html.H3("Análisis del escenario: ", className='h3'),
         html.P("CONCLUSIONES DEL CASO(PENDIENTE)", className='p inner-section-container'),
@@ -355,34 +427,6 @@ try:
         html.H3("Conclusiones generales", className='h3'),
         html.P("POR DEFINIR(IMPORTANTE)", className='p inner-section-container')
     ], className='section-container')
-
-    # Definir el callback para actualizar la gráfica de área en función de la selección de entidades
-    @app.callback(
-        Output('area-chart', 'figure'),
-        Input('entity-selector', 'value')
-    )
-    def update_area_chart(selected_entities):
-        filtered_data = rent_sem[rent_sem['nombre_entidad'].isin(selected_entities)]
-        fig = px.line(filtered_data, x='semana', y='rentab_sem_total', color='nombre_entidad',
-                      title='Tendencia de Rentabilidad Promedio Diaria por Entidad y Semana en Marzo 2024',
-                      labels={'rentab_sem_total': 'Rentabilidad Promedio Diaria', 'semana': 'Semana', 'nombre_entidad': 'Entidad'})
-        return fig
-
-    # Definir el callback para actualizar el mapa de calor en función de la selección de entidades
-    @app.callback(
-        Output('heatmap1', 'figure'),
-        Input('heatmap-entity-selector', 'value')
-    )
-    def update_heatmap(selected_entities):
-        filtered_data = heatmap_data.loc[selected_entities]
-        fig = px.imshow(
-            filtered_data,
-            labels=dict(x="Semana", y="Entidad", color="Rentabilidad"),
-            title='Mapa de Calor de Rentabilidad por Entidad y Semana'
-        ).update_layout(
-            height=800
-        )
-        return fig
 
     # Ejecutar la aplicación
     if __name__ == '__main__':
