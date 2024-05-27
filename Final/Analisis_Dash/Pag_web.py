@@ -333,8 +333,12 @@ SELECT * FROM TopPeores;"""
                       ),
         
         html.H3("Análisis del escenario: ", className='h3'),
-        html.P("CONCLUSIONES DEL CASO(PENDIENTE)", className='p inner-section-container'),
-        
+        html.Div([
+            html.P("Laura: Se identificaron los negocios con las mejores y peores variaciones diarias de rentabilidad. El negocio con la peor variación fue el Compartimiento B - FCP Deuda Infraestructura II Sura - Credicorp Capital, mientras que el negocio con la mejor variación, superando significativamente a los demás con una mediana de 662.7351 por día, fue el FCP 4G Credicorp Capital - Sura AM Comp Liquidez I."),
+            html.P("Daniel: Con estas gráficas, podemos observar los 5 mejores y los 5 peores negocios según la variación diaria de la rentabilidad. Esto nos permite realizar el análisis necesario al momento de invertir. En esta parte del análisis, es importante tener en cuenta el negocio FCP 4G Credicorp Capital - Sura AM Comp Liquidez I, ya que ha mantenido una buena variación."),
+            html.P("Kevin: "),
+            html.P("Reina: ")
+        ], className='inner-section-container'),
         # SEGUNDO ESCENARIO
         html.H2("Segundo escenario: ", className='h2'),
         html.P("Visualizar la diversificación de riesgos de las inversiones de cada entidad para identificar si alguna representa una parte desproporcionada del portafolio total.", className='p'),
@@ -346,6 +350,13 @@ SELECT * FROM TopPeores;"""
             ),
             className='graph'
         ),
+        html.H3("Análisis del escenario: ", className='h3'),
+        html.Div([
+            html.P("Laura: "),
+            html.P("Daniel: "),
+            html.P("Kevin: "),
+            html.P("Reina: ")
+        ], className='inner-section-container'),
         
         # TERCER ESCENARIO
         html.H2("Tercer escenario: ", className='h2'),
@@ -406,7 +417,12 @@ SELECT * FROM TopPeores;"""
         ),
 
         html.H3("Análisis del escenario: ", className='h3'),
-        html.P("CONCLUSIONES DEL CASO(PENDIENTE)", className='p inner-section-container'),
+        html.Div([
+            html.P("Laura: "),
+            html.P("Daniel: "),
+            html.P("Kevin: "),
+            html.P("Reina: ")
+        ], className='inner-section-container'),
 
         
         # CUARTO ESCENARIO
@@ -421,7 +437,12 @@ SELECT * FROM TopPeores;"""
 
         
         html.H3("Análisis del escenario: ", className='h3'),
-        html.P("CONCLUSIONES DEL CASO(PENDIENTE)", className='p inner-section-container'),
+        html.Div([
+            html.P("Laura: "),
+            html.P("Daniel: "),
+            html.P("Kevin: "),
+            html.P("Reina: ")
+        ], className='inner-section-container'),
         
         # FINAL DEL ARCHIVO
         html.H3("Conclusiones generales", className='h3'),
