@@ -411,7 +411,7 @@ SELECT * FROM TopPeores;"""
         
         # CUARTO ESCENARIO
         html.H2("Cuarto escenario: ", className='h2'),
-        html.P("comprender cómo se distribuyen los fondos entre los diferentes subtipos de inversiones al cierre de marzo ", className='p'),
+        html.P("Hallar la distribución de los fondos entre los diferentes subtipos de inversiones al cierre de marzo ", className='p'),
 
         dcc.Graph(
             id='grafica_torta',
