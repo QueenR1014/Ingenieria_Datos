@@ -336,8 +336,8 @@ SELECT * FROM TopPeores;"""
         html.Div([
             html.P("Laura: Se identificaron los negocios con las mejores y peores variaciones diarias de rentabilidad. El negocio con la peor variación fue el Compartimiento B - FCP Deuda Infraestructura II Sura - Credicorp Capital, mientras que el negocio con la mejor variación, superando significativamente a los demás con una mediana de 662.7351 por día, fue el FCP 4G Credicorp Capital - Sura AM Comp Liquidez I."),
             html.P("Daniel: Con estas gráficas, podemos observar los 5 mejores y los 5 peores negocios según la variación diaria de la rentabilidad. Esto nos permite realizar el análisis necesario al momento de invertir. En esta parte del análisis, es importante tener en cuenta el negocio FCP 4G Credicorp Capital - Sura AM Comp Liquidez I, ya que ha mantenido una buena variación."),
-            html.P("Kevin: "),
-            html.P("Reina: ")
+            html.P("Kevin: Estas gráficas permiten identificar los negocios que sobresalen y aquellos que enfrentan dificultades, proporcionando una herramienta para la toma de decisiones estratégicas. Las variaciones en la rentabilidad diaria son indicadores críticos de desempeño, y su análisis puede guiar inversiones futuras."),
+            html.P("Juan Jose: ")
         ], className='inner-section-container'),
         # SEGUNDO ESCENARIO
         html.H2("Segundo escenario: ", className='h2'),
@@ -352,10 +352,10 @@ SELECT * FROM TopPeores;"""
         ),
         html.H3("Análisis del escenario: ", className='h3'),
         html.Div([
-            html.P("Laura: "),
-            html.P("Daniel: "),
-            html.P("Kevin: "),
-            html.P("Reina: ")
+            html.P("Laura: La diversificación es una técnica que asigna inversiones a diferentes y variados activos para minimizar el riesgo. Esto implica una mezcla de diversos vehículos de inversión, así como exposiciones a distintas industrias y geografías. En nuestro análisis, se observó que las entidades menos diversificadas son ADCAP COLOMBIA S.A., FIDUCIARIA SURA S.A., y FIDUCIARIA DE OCCIDENTE S.A., mientras que la entidad más diversificada es Valores Bancolombia S.A. Esto asegura que ninguna entidad represente una proporción desproporcionada del riesgo total."),
+            html.P("Daniel: Las entidades que aparecen en la parte superior de la gráfica, como ADCAP COLOMBIA S.A. y FIDUCIARIA SURA S.A., presentan los porcentajes más bajos. Esto sugiere que estas entidades están diversificando sus inversiones de manera más amplia, lo que reduce el riesgo asociado a la concentración en una sola inversión."),
+            html.P("Kevin: Se puede identificar como tiene diversificado el fondo cada entidad, para lo cual las entidad que tienen un negocio que representa un gran porcentaje de su capital, existe un riesgo más alto de las que tienen una buena diversificación."),
+            html.P("Juan Jose: ")
         ], className='inner-section-container'),
         
         # TERCER ESCENARIO
@@ -418,10 +418,10 @@ SELECT * FROM TopPeores;"""
 
         html.H3("Análisis del escenario: ", className='h3'),
         html.Div([
-            html.P("Laura: "),
-            html.P("Daniel: "),
-            html.P("Kevin: "),
-            html.P("Reina: ")
+            html.P("Laura: Para evaluar la consistencia y volatilidad de los rendimientos de cada entidad, se calcularon el coeficiente de variación y el porcentaje de cambio de los valores de fondo de cierre durante el mes de marzo. La entidad con el menor coeficiente de variación, indicando mayor consistencia, fue la Compañía de Profesionales de Bolsa, mientras que la entidad con mayor coeficiente de variación fue BBVA Valores Colombia S.A. Comisión. En cuanto al porcentaje de cambio, BBVA Valores Colombia S.A. Comisión presentó el mejor rendimiento positivo. La Compañía de Profesionales de Bolsa no mostró cambios a lo largo del mes, y Fiduciaria La Previsora S.A. tuvo el peor rendimiento con un cambio negativo."),
+            html.P("Daniel: La entidad con la mayor disminución es FIDUCIARIA LA PREVISORA S.A., ubicada en el extremo derecho de la gráfica, con un porcentaje de cambio cercano al -20%. Además, esta entidad se encuentra entre las que presentan un mayor coeficiente de variación."),
+            html.P("Kevin: El coeficiente de variación nos ayuda a analizar la volatilidad y que tan consistente son los rendimientos de cada entidad lo cual nos ayuda a concluir cuales son mas seguros debido a su baja volatilidad, respecto al promedio de crecimiento de las fondos a final de mes para poder hacer un decisión inteligente a la hora de invertir en alguna entidad."),
+            html.P("Juan Jose: ")
         ], className='inner-section-container'),
 
         
@@ -438,10 +438,10 @@ SELECT * FROM TopPeores;"""
         
         html.H3("Análisis del escenario: ", className='h3'),
         html.Div([
-            html.P("Laura: "),
-            html.P("Daniel: "),
-            html.P("Kevin: "),
-            html.P("Reina: ")
+            html.P("Laura: Al analizar la distribución de fondos entre diferentes subtipos de inversiones al cierre de marzo, se encontró que el subtipo predominante es el Fondo de Inversión Colectiva (FIC) de tipo general, que representa el 59.5% del total. En contraste, el subtipo con menor participación es el FIC Inmobiliario, con un 3.36%. Esta distribución refleja una preferencia significativa por los fondos de tipo general."),
+            html.P("Daniel: Los subtipos de negocios que ocupan la mayor proporción en los fondos de inversión colombianos son los FIC de tipo general. Esto nos proporciona una visión clara de dónde es recomendable invertir este año."),
+            html.P("Kevin: La distribución muestra una clara preferencia por los FIC de tipo general y los Fondos de Capital Privado, los cuales juntos representan más del 80% del fondo total. Esto sugiere una estrategia de inversión equilibrada entre diversificación general y apuestas significativas en activos privados. La menor proporción en FIC de Mercado Monetario, Bursátiles e Inmobiliarias indica una exposición más controlada a estos segmentos."),
+            html.P("Juan Jose: ")
         ], className='inner-section-container'),
         
         # FINAL DEL ARCHIVO
