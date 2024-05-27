@@ -1,0 +1,300 @@
+-------------------------------------------------------1------------------------------------------------------
+
+WITH RentabilidadMensual AS (
+    SELECT 
+        n.Nombre_negocio,
+        r.rentab_dia
+    FROM 
+        Entidad e
+    JOIN 
+        Rentabilidad r ON e.cod_transaccion = r.cod_transaccion
+    JOIN 
+        Negocio n ON e.cod_negocio = n.cod_negocio
+    WHERE 
+        e.Fecha BETWEEN '2024-03-01' AND '2024-03-31'
+),
+MedianaRentabilidad AS (
+    SELECT 
+        Nombre_negocio,
+        PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY rentab_dia) AS mediana_rentab_dia
+    FROM 
+        RentabilidadMensual
+    GROUP BY 
+        Nombre_negocio
+),
+TopPeores AS (
+    SELECT 
+        Nombre_negocio,
+        mediana_rentab_dia
+    FROM 
+        MedianaRentabilidad
+    ORDER BY 
+        mediana_rentab_dia ASC
+    LIMIT 5
+),
+TopMejores AS (
+    SELECT 
+        Nombre_negocio,
+        mediana_rentab_dia
+    FROM 
+        MedianaRentabilidad
+    ORDER BY 
+        mediana_rentab_dia DESC
+    LIMIT 5
+)
+
+SELECT * FROM TopMejores;
+    """
+    cursor.execute(consulta1)
+    rows_can = cursor.fetchall()
+    cons_1 = pd.DataFrame(rows_can, columns=['nombre_negocio', 'mediana_rentab_dia'])
+
+    consulta8="""WITH RentabilidadMensual AS (
+    SELECT 
+        n.Nombre_negocio,
+        r.rentab_dia
+    FROM 
+        Entidad e
+    JOIN 
+        Rentabilidad r ON e.cod_transaccion = r.cod_transaccion
+    JOIN 
+        Negocio n ON e.cod_negocio = n.cod_negocio
+    WHERE 
+        e.Fecha BETWEEN '2024-03-01' AND '2024-03-31'
+),
+MedianaRentabilidad AS (
+    SELECT 
+        Nombre_negocio,
+        PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY rentab_dia) AS mediana_rentab_dia
+    FROM 
+        RentabilidadMensual
+    GROUP BY 
+        Nombre_negocio
+),
+TopPeores AS (
+    SELECT 
+        Nombre_negocio,
+        mediana_rentab_dia
+    FROM 
+        MedianaRentabilidad
+    ORDER BY 
+        mediana_rentab_dia ASC
+    LIMIT 5
+),
+TopMejores AS (
+    SELECT 
+        Nombre_negocio,
+        mediana_rentab_dia
+    FROM 
+        MedianaRentabilidad
+    ORDER BY 
+        mediana_rentab_dia DESC
+    LIMIT 5
+)
+
+SELECT * FROM TopPeores;"""
+
+    cursor.execute(consulta8)
+    rows_can = cursor.fetchall()
+    cons_8= pd.DataFrame(rows_can, columns=['nombre_negocio', 'mediana_rentab_dia'])
+
+-------------------------------------------------------2------------------------------------------------------
+
+WITH RentabilidadMensual AS (
+    SELECT 
+        n.Nombre_negocio,
+        r.rentab_dia
+    FROM 
+        Entidad e
+    JOIN 
+        Rentabilidad r ON e.cod_transaccion = r.cod_transaccion
+    JOIN 
+        Negocio n ON e.cod_negocio = n.cod_negocio
+    WHERE 
+        e.Fecha BETWEEN '2024-03-01' AND '2024-03-31'
+),
+MedianaRentabilidad AS (
+    SELECT 
+        Nombre_negocio,
+        PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY rentab_dia) AS mediana_rentab_dia
+    FROM 
+        RentabilidadMensual
+    GROUP BY 
+        Nombre_negocio
+),
+TopPeores AS (
+    SELECT 
+        Nombre_negocio,
+        mediana_rentab_dia
+    FROM 
+        MedianaRentabilidad
+    ORDER BY 
+        mediana_rentab_dia ASC
+    LIMIT 5
+),
+TopMejores AS (
+    SELECT 
+        Nombre_negocio,
+        mediana_rentab_dia
+    FROM 
+        MedianaRentabilidad
+    ORDER BY 
+        mediana_rentab_dia DESC
+    LIMIT 5
+)
+
+SELECT * FROM TopPeores;"""
+
+    cursor.execute(consulta8)
+    rows_can = cursor.fetchall()
+    cons_8= pd.DataFrame(rows_can, columns=['nombre_negocio', 'mediana_rentab_dia'])
+
+    # Consultas escenario 2
+    consulta2 = """
+    WITH PorcentajePorNegocio AS (
+        SELECT 
+            e.Nombre_entidad,
+            n.Nombre_negocio,
+            SUM(r.valor_fondo_cierre) AS valor_fondo_cierre_negocio,
+            (SUM(r.valor_fondo_cierre) / entidad_total.total_valor_fondo_cierre) * 100 AS porcentaje_total
+        FROM 
+            Entidad e
+        JOIN 
+            Rentabilidad r ON e.cod_transaccion = r.cod_transaccion
+        JOIN 
+            Negocio n ON e.cod_negocio = n.cod_negocio
+        JOIN 
+            (SELECT 
+                 e2.Nombre_entidad,
+                 SUM(r2.valor_fondo_cierre) AS total_valor_fondo_cierre
+             FROM 
+                 Entidad e2
+             JOIN 
+                 Rentabilidad r2 ON e2.cod_transaccion = r2.cod_transaccion
+             WHERE 
+                 e2.Fecha = '2024-03-31'
+             GROUP BY 
+                 e2.Nombre_entidad) AS entidad_total
+        ON 
+            e.Nombre_entidad = entidad_total.Nombre_entidad
+        WHERE 
+            e.Fecha = '2024-03-31'
+        GROUP BY 
+            e.Nombre_entidad, n.Nombre_negocio, entidad_total.total_valor_fondo_cierre
+    )
+    SELECT 
+        Nombre_entidad,
+        MAX(porcentaje_total) AS porcentaje_max
+    FROM 
+        PorcentajePorNegocio
+    GROUP BY 
+        Nombre_entidad
+    ORDER BY 
+        porcentaje_max DESC;
+
+-------------------------------------------------------3------------------------------------------------------
+ WITH ValoresPorFecha AS (
+        SELECT 
+            e.Nombre_entidad,
+            e.Fecha,
+            SUM(r.valor_fondo_cierre) AS total_valor_fondo_cierre
+        FROM 
+            Entidad e
+        JOIN 
+            Rentabilidad r ON e.cod_transaccion = r.cod_transaccion
+        GROUP BY 
+            e.Nombre_entidad, e.Fecha
+    ),
+    EstadisticasPorEntidad AS (
+        SELECT 
+            Nombre_entidad,
+            AVG(total_valor_fondo_cierre) AS promedio_valor_fondo_cierre,
+            STDDEV(total_valor_fondo_cierre) AS desviacion_estandar_valor_fondo_cierre
+        FROM 
+            ValoresPorFecha
+        GROUP BY 
+            Nombre_entidad
+    )
+    SELECT 
+        Nombre_entidad,
+        (desviacion_estandar_valor_fondo_cierre / promedio_valor_fondo_cierre) * 100 AS coeficiente_variacion
+    FROM 
+        EstadisticasPorEntidad
+    ORDER BY 
+        coeficiente_variacion DESC;
+    """
+    cursor.execute(consulta3)
+    rows_can = cursor.fetchall()
+    cons_3 = pd.DataFrame(rows_can, columns=['nombre_entidad', 'coeficiente_variacion'])
+
+    consulta4 = """
+    WITH ValoresPorFecha AS (
+        SELECT 
+            e.Nombre_entidad,
+            e.Fecha,
+            SUM(r.valor_fondo_cierre) AS total_valor_fondo_cierre
+        FROM 
+            Entidad e
+        JOIN 
+            Rentabilidad r ON e.cod_transaccion = r.cod_transaccion
+        WHERE 
+            e.Fecha IN ('2024-03-01', '2024-03-31')
+        GROUP BY 
+            e.Nombre_entidad, e.Fecha
+    ),
+    ValoresInicio AS (
+        SELECT 
+            Nombre_entidad,
+            total_valor_fondo_cierre AS valor_inicio
+        FROM 
+            ValoresPorFecha
+        WHERE 
+            Fecha = '2024-03-01'
+    ),
+    ValoresFin AS (
+        SELECT 
+            Nombre_entidad,
+            total_valor_fondo_cierre AS valor_fin
+        FROM 
+            ValoresPorFecha
+        WHERE 
+            Fecha = '2024-03-31'
+    )
+    SELECT 
+        vi.Nombre_entidad,
+        ((vf.valor_fin - vi.valor_inicio) / vi.valor_inicio) * 100 AS porcentaje_cambio
+    FROM 
+        ValoresInicio vi
+    JOIN 
+        ValoresFin vf ON vi.Nombre_entidad = vf.Nombre_entidad
+    ORDER BY 
+        porcentaje_cambio DESC;
+
+-------------------------------------------------------4------------------------------------------------------
+
+SELECT 
+        s.Nombre_subtipo,
+        (SUM(r.valor_fondo_cierre) / total.total_valor_fondo_cierre) * 100 AS porcentaje_total
+    FROM 
+        Entidad e
+    JOIN 
+        Rentabilidad r ON e.cod_transaccion = r.cod_transaccion
+    JOIN 
+        Negocio n ON e.cod_negocio = n.cod_negocio
+    JOIN 
+        Subtipo s ON n.sub_negocio = s.id_ST
+    JOIN 
+        (SELECT 
+             SUM(r2.valor_fondo_cierre) AS total_valor_fondo_cierre
+         FROM 
+             Entidad e2
+         JOIN 
+             Rentabilidad r2 ON e2.cod_transaccion = r2.cod_transaccion
+         WHERE 
+             e2.Fecha = '2024-03-31') AS total
+    ON 
+        e.Fecha = '2024-03-31'
+    GROUP BY 
+        s.Nombre_subtipo, total.total_valor_fondo_cierre
+    ORDER BY 
+        porcentaje_total DESC;
